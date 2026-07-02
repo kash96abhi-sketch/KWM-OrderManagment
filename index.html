@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>KWM Order Form</title>
+
+<link rel="stylesheet" href="style.css">
+<script src="script.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Header -->
+
+    <header class="header">
+
+        <img src="KWM logo.jpg" class="logo" alt="Company Logo">
+
+        <div>
+
+            <h1>Kranti Water Meters</h1>
+
+            <p>Dealer Order Management System</p>
+
+        </div>
+
+    </header>
+
+    <!-- Order Form -->
+
+    <div class="card">
+
+        <h2>Order Form</h2>
+
+        <div id="errorMessage" class="error"></div>
+
+        <div id="successMessage" class="success"></div>
+
+        <div class="form-group">
+
+            <label>Party Name</label>
+
+            <input
+                type="text"
+                id="partyName"
+                placeholder="Enter Party Name">
+
+        </div>
+
+        <div id="itemsContainer"></div>
+
+        <button
+            id="submitBtn"
+            onclick="placeOrder()">
+
+            Place Order
+
+        </button>
+
+    </div>
+
+    <!-- Thank You Page -->
+
+    <div
+        id="thankYouPage"
+        class="thankyou"
+        style="display:none;">
+
+        <h2>🎉 Order Placed Successfully</h2>
+
+        <p id="thankYouText"></p>
+
+        <button onclick="newOrder()">
+
+            Place New Order
+
+        </button>
+
+    </div>
+
+</div>
+
+<footer>
+
+    <p>
+
+        This Order Form is Managed by
+
+        <strong>ABC Company</strong>
+
+    </p>
+
+    <p>
+
+        © 2026 ABC Company
+
+    </p>
+
+</footer>
+
+
+
+</body>
+</html>
