@@ -3,7 +3,7 @@
 // (Paste your deployed Web App URL here in Part 3C)
 //====================================================
 
-const API_URL = "https://script.google.com/macros/s/AKfycbxIzwbq7pvAYH4HcgjMDMZLFW83Jd2epLuVtl3QBmFXQO2MCPiOF0hmsvl6ZRMIpCaJ/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbzBqK-ak_jN-6tqJ5L1BDlJEBpDgSOnbG5DOa-EwMNDLz8rxCMYywb3pkTO9eN8XlAy/exec";
 
 //====================================================
 // MODEL DATA
