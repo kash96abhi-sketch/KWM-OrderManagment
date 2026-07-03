@@ -3,7 +3,7 @@
 // (Paste your deployed Web App URL here in Part 3C)
 //====================================================
 
-const API_URL = "https://script.google.com/macros/s/AKfycbxvnuio53n0ugDiaEWbwAEjfG7j0QSr_AqcYXdrOVWOW__qTbp7oIrabDo_ifqGwqIi/exec";
+const API_URL = "https://script.google.com/macros/s/AKfycbxIzwbq7pvAYH4HcgjMDMZLFW83Jd2epLuVtl3QBmFXQO2MCPiOF0hmsvl6ZRMIpCaJ/exec";
 
 //====================================================
 // MODEL DATA
@@ -365,6 +365,9 @@ function setLoading(isLoading){
 //====================================================
 // PLACE ORDER
 //====================================================
+//====================================================
+// PLACE ORDER (Bulletproof CORS Bypass version)
+//====================================================
 async function placeOrder() {
     // Validate Form
     if (!validateForm()) {
@@ -378,23 +381,24 @@ async function placeOrder() {
     try {
         const orderData = getOrderData();
 
-        // We use text/plain format down here to slip past the CORS preflight guard safely
+        // Convert the JSON data into URL-encoded form parameters
+        // This completely eliminates the CORS preflight check across all browsers
+        const formBody = new URLSearchParams();
+        formBody.append("formData", JSON.stringify(orderData));
+
         const response = await fetch(API_URL, {
             method: "POST",
             headers: {
-                "Content-Type": "text/plain;charset=utf-8"
+                "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8"
             },
-            body: JSON.stringify(orderData)
+            body: formBody
         });
 
         const result = await response.json();
         setLoading(false);
 
         if (result.success) {
-            // Hide Form
             document.querySelector(".card").style.display = "none";
-
-            // Show Thank You Page
             document.getElementById("thankYouPage").style.display = "block";
             document.getElementById("thankYouText").innerHTML =
                 "Your order has been placed successfully.<br><br>" +
@@ -402,18 +406,13 @@ async function placeOrder() {
                 "<strong>" + result.orderId + "</strong>";
 
             resetForm();
-        }
-        else {
-            showError(
-                "Facing some issue in placing order.<br>Details: " + (result.message || "Unknown error")
-            );
+        } else {
+            showError("Facing some issue in placing order.<br>Details: " + (result.message || "Unknown error"));
         }
     }
     catch (error) {
         setLoading(false);
-        showError(
-            "Facing some issue in placing order.<br>Please try after some time!"
-        );
+        showError("Facing some issue in placing order.<br>Please try after some time!");
         console.error(error);
     }
 }
