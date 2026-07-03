@@ -362,79 +362,60 @@ function setLoading(isLoading){
 // PLACE ORDER
 //====================================================
 
+//====================================================
+// PLACE ORDER
+//====================================================
 async function placeOrder() {
-
     // Validate Form
-
     if (!validateForm()) {
         return;
     }
 
     // Show Loading
-
     setLoading(true);
-
     hideMessages();
 
     try {
-
         const orderData = getOrderData();
 
+        // We use text/plain format down here to slip past the CORS preflight guard safely
         const response = await fetch(API_URL, {
-
             method: "POST",
-
             headers: {
-                "Content-Type": "application/json"
+                "Content-Type": "text/plain;charset=utf-8"
             },
-
             body: JSON.stringify(orderData)
-
         });
 
         const result = await response.json();
-
         setLoading(false);
 
         if (result.success) {
-
             // Hide Form
-
             document.querySelector(".card").style.display = "none";
 
             // Show Thank You Page
-
             document.getElementById("thankYouPage").style.display = "block";
-
             document.getElementById("thankYouText").innerHTML =
                 "Your order has been placed successfully.<br><br>" +
                 "Please note your Order ID for future reference.<br><br>" +
                 "<strong>" + result.orderId + "</strong>";
 
             resetForm();
-
         }
         else {
-
             showError(
-                "Facing some issue in placing order.<br>Please try after some time!"
+                "Facing some issue in placing order.<br>Details: " + (result.message || "Unknown error")
             );
-
         }
-
     }
     catch (error) {
-
         setLoading(false);
-
         showError(
             "Facing some issue in placing order.<br>Please try after some time!"
         );
-
         console.error(error);
-
     }
-
 }
 
 //====================================================
